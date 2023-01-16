@@ -1,0 +1,7 @@
+<h1>SIGN IN</h1>
+{{ error_message }}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign In</button>
+</form>
