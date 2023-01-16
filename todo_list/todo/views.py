@@ -7,7 +7,7 @@ from .models import Todo
 
 
 def index(request):
-    return render(request, 'todo/index.html', {'context': request.user.username})
+    return render(request, 'todo/index.html', {'user': request.user})
 
 
 def view_todos(request):
