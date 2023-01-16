@@ -1,3 +1,8 @@
 <h1>INDEX PAGE</h1>
-
-hi, {{ user.username }}
+{% if user.is_authenticated %}
+    hi, {{ user.username }} <br>
+    <a href="{% url 'sign_out' %}">Sign Out</a>
+{% else %}
+    <a href="{% url 'sign_in' %}">Sign In</a>
+    <a href="{% url 'sign_up' %}">Sign Up</a>
+{% endif %}
