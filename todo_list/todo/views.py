@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
-from django.shortcuts import render, get_list_or_404, redirect
+from django.shortcuts import render, get_list_or_404, redirect, get_object_or_404
 from .models import Todo
 
 
@@ -13,6 +13,11 @@ def index(request):
 def view_todos(request):
     todos = get_list_or_404(Todo)
     return render(request, 'todo/view_todos.html', {'todos': todos})
+
+
+def todo_by_id(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+    return render(request, 'todo/view_todo.html', {'todo': todo})
 
 
 def sign_up(request):
