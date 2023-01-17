@@ -11,7 +11,7 @@ def index(request):
 
 
 def view_todos(request):
-    todos = get_list_or_404(Todo)
+    todos = get_list_or_404(Todo, author_id=request.user)
     return render(request, 'todo/view_todos.html', {'todos': todos})
 
 
