@@ -16,6 +16,11 @@ def view_todos(request):
     return render(request, 'todo/view_todos.html', {'todos': todos_list})
 
 
+def completed_todos(request):
+    todos_list = Todo.objects.filter(author_id=request.user, completed__isnull=False).order_by('-edited')
+    return render(request, 'todo/completed_todos.html', {'todos': todos_list})
+
+
 def todo_by_id(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     return render(request, 'todo/view_todo.html', {'todo': todo})

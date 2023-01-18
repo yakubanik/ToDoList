@@ -1,0 +1,6 @@
+<h1>COMPLETED TODOS</h1>
+<ul>
+    {% for todo in todos %}
+        <li>{{ todo.title }} - {{ todo.completed }}</li>
+    {% endfor %}
+</ul>
