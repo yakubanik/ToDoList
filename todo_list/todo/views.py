@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Todo
-from .forms import CreateTodoForm
+from .forms import TodoForm
 
 
 def index(request):
@@ -28,16 +28,16 @@ def view_todo(request, todo_id):
 
 def create_todo(request):
     if request.method == 'GET':
-        return render(request, 'todo/create_todo.html', {'form': CreateTodoForm})
+        return render(request, 'todo/create_todo.html', {'form': TodoForm})
     else:
         try:
-            form = CreateTodoForm(request.POST)
+            form = TodoForm(request.POST)
             new_model = form.save(commit=False)
             new_model.user = request.user
             new_model.save()
             return redirect('todos')
         except ValueError:
-            return render(request, 'todo/view_todos.html', {'form': CreateTodoForm,
+            return render(request, 'todo/view_todos.html', {'form': TodoForm,
                                                             'error_message': 'Invalid value entered'})
 
 
