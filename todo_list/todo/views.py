@@ -21,7 +21,7 @@ def completed_todos(request):
     return render(request, 'todo/completed_todos.html', {'todos': todos_list})
 
 
-def todo_by_id(request, todo_id):
+def view_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     return render(request, 'todo/view_todo.html', {'todo': todo})
 
