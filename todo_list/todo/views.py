@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 from .models import Todo
 from .forms import TodoForm
@@ -13,21 +14,25 @@ def index(request):
     return render(request, 'todo/index.html', {'user': request.user})
 
 
+@login_required(login_url='sign_in')
 def current_todos(request):
     todos_list = Todo.objects.filter(author_id=request.user, completed__isnull=True).order_by('-edited')
     return render(request, 'todo/view_todos.html', {'todos': todos_list})
 
 
+@login_required(login_url='sign_in')
 def completed_todos(request):
     todos_list = Todo.objects.filter(author_id=request.user, completed__isnull=False).order_by('-edited')
     return render(request, 'todo/completed_todos.html', {'todos': todos_list})
 
 
+@login_required(login_url='sign_in')
 def view_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     return render(request, 'todo/view_todo.html', {'todo': todo})
 
 
+@login_required(login_url='sign_in')
 def upsert_todo(request, todo_id=None):
     todo = None
     if todo_id:
@@ -50,6 +55,7 @@ def upsert_todo(request, todo_id=None):
                                                              'error_message': 'Bad data entered'})
 
 
+@login_required(login_url='sign_in')
 def complete_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     if request.method == 'POST':
@@ -58,6 +64,7 @@ def complete_todo(request, todo_id):
         return redirect('current_todos')
 
 
+@login_required(login_url='sign_in')
 def delete_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     if request.method == 'POST':
@@ -100,6 +107,7 @@ def sign_in(request):
             return redirect('index')
 
 
+@login_required(login_url='sign_in')
 def sign_out(request):
     logout(request)
     return redirect('index')
