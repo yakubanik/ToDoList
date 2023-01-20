@@ -12,7 +12,7 @@ def index(request):
 
 
 def current_todos(request):
-    todos_list = Todo.objects.order_by('-edited')
+    todos_list = Todo.objects.filter(author_id=request.user, completed__isnull=True).order_by('-edited')
     return render(request, 'todo/view_todos.html', {'todos': todos_list})
 
 
