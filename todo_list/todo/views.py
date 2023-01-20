@@ -11,7 +11,7 @@ def index(request):
     return render(request, 'todo/index.html', {'user': request.user})
 
 
-def view_todos(request):
+def current_todos(request):
     todos_list = Todo.objects.order_by('-edited')
     return render(request, 'todo/view_todos.html', {'todos': todos_list})
 
