@@ -26,6 +26,21 @@ def view_todo(request, todo_id):
     return render(request, 'todo/view_todo.html', {'todo': todo})
 
 
+def edit_todo(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+    if request.method == 'GET':
+        form = TodoForm(instance=todo)
+        return render(request, 'todo/edit_todo.html', {'form': form})
+    else:
+        try:
+            form = TodoForm(request.POST, instance=todo)
+            form.save()
+            return redirect('current_todos')
+        except ValueError:
+            return render(request, 'todo/edit_todo.html', {'form': TodoForm(instance=todo),
+                                                           'error_message': 'Bad data entered'})
+
+
 def create_todo(request):
     if request.method == 'GET':
         return render(request, 'todo/create_todo.html', {'form': TodoForm})
