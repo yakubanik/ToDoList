@@ -56,7 +56,14 @@ def complete_todo(request, todo_id):
         todo.completed = timezone.now()
         todo.save()
         return redirect('current_todos')
- 
+
+
+def delete_todo(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('current_todos')
+
 
 def sign_up(request):
     if request.method == 'GET':

@@ -10,6 +10,7 @@ urlpatterns = [
     path('new/', views.upsert_todo, name='create_todo'),
     path('<int:todo_id>/edit', views.upsert_todo, name='edit_todo'),
     path('<int:todo_id>/complete', views.complete_todo, name='complete_todo'),
+    path('<int:todo_id>/delete', views.delete_todo, name='delete_todo'),
 
     path('sign_up/', views.sign_up, name='sign_up'),
     path('sign_in/', views.sign_in, name='sign_in'),
