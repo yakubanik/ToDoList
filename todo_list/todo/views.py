@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+
 from .models import Todo
 from .forms import TodoForm
 
@@ -47,6 +49,14 @@ def upsert_todo(request, todo_id=None):
             return render(request, 'todo/upsert_todo.html', {'form': TodoForm(instance=todo),
                                                              'error_message': 'Bad data entered'})
 
+
+def complete_todo(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+    if request.method == 'POST':
+        todo.completed = timezone.now()
+        todo.save()
+        return redirect('current_todos')
+ 
 
 def sign_up(request):
     if request.method == 'GET':
