@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'todo/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'todo/css/style.css' %}" rel="stylesheet">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+<div class="container">
+    {% include 'todo/includes/navbar.html' %}
+
+
+    {% block content %} {% endblock %}
+</div>
+
+<script src="{% static 'todo/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
