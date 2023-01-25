@@ -11,6 +11,8 @@ from .forms import TodoForm
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('current_todos')
     return render(request, 'todo/index.html', {'user': request.user})
 
 
