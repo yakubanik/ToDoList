@@ -1,8 +1,11 @@
-<h1>INDEX PAGE</h1>
-{% if user.is_authenticated %}
-    hi, {{ user.username }} <br>
-    <a href="{% url 'sign_out' %}">Sign Out</a>
-{% else %}
-    <a href="{% url 'sign_in' %}">Sign In</a>
-    <a href="{% url 'sign_up' %}">Sign Up</a>
-{% endif %}
+{% extends "todo/base.html" %}
+
+{% block title %}Todo{% endblock %}
+
+{% block content %}
+    <div class="position-absolute top-50 start-50 translate-middle text-center">
+        <h1>Manage your affairs easily and simply</h1>
+        <p>Create notes and todos on this site to take control of your life</p>
+        <p><a class="btn btn-primary" href="{% url 'sign_up' %}" role="button">Sign Up</a> to start.</p>
+    </div>
+{% endblock %}
