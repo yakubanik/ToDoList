@@ -1,4 +1,21 @@
-<h1>ALL TODOS</h1>
-{% for todo in todos %}
-    {{ todo.title }}
-{% endfor %}
+{% extends "todo/base.html" %}
+
+{% block title %}Current Todos{% endblock %}
+
+{% block content %}
+
+    <div class="w-75 mx-auto ">
+
+        {% for todo in todos %}
+            {% include 'todo/includes/preview_card.html' %}
+        {% empty %}
+            <div class="position-absolute top-50 start-50 translate-middle">
+                <p class="my-4 text-center">Great, all tasks completed</p>
+                <a class="btn btn-success text-center" href="{% url 'create_todo' %}" role="button">Create a new todo</a>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
+

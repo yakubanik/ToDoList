@@ -1,0 +1,15 @@
+{% extends "todo/base.html" %}
+
+{% block title %}
+    {% if form.todo %}
+        {{ form.todo.title }}
+    {% else %}
+        New Todo
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% include 'todo/includes/todo_input_form.html' %}
+
+{% endblock %}

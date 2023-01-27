@@ -1,7 +1,36 @@
-<h1>SIGN UP</h1>
-{{ error_message }}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
+{% extends 'todo/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+    <div class="w-25 mx-auto position-absolute top-50 start-50 translate-middle">
+        {% if error_message %}
+            {% include 'todo/includes/error_message.html' %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="id_username" name="username" autofocus required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="id_password1" name="password1">
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm password</label>
+                <input type="password" class="form-control" id="id_password2" name="password2">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Sign Up</button>
+            <hr>
+            <div class="text-center">
+                Do you already have an account? <a class="btn btn-primary" href="{% url 'sign_in' %}" role="button">Sign In</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

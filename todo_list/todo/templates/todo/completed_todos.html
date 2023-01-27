@@ -1,6 +1,27 @@
-<h1>COMPLETED TODOS</h1>
-<ul>
-    {% for todo in todos %}
-        <li>{{ todo.title }} - {{ todo.completed }}</li>
-    {% endfor %}
-</ul>
+{% extends "todo/base.html" %}
+
+{% block title %}Completed Todos{% endblock %}
+
+{% block content %}
+    <div class="w-75 mx-auto ">
+
+        {% for todo in todos %}
+
+            {% include 'todo/includes/preview_card.html' %}
+            <div class="d-flex flex-row-reverse">
+                <p class="text-muted">Completed {{ todo.completed }}</p>
+            </div>
+
+        {% empty %}
+
+            <div class="position-absolute top-50 start-50 translate-middle">
+                <p class="my-4 text-center">You have not completed any tasks yet</p>
+                <a class="btn btn-success" href="{% url 'create_todo' %}" role="button">Create a new todo</a>
+                or
+                <a class="btn btn-primary" href="{% url 'current_todos' %}" role="button">go to your todos</a>
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% endblock %}

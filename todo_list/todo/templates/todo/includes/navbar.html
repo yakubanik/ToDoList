@@ -1,18 +1,30 @@
-<nav class="navbar bg-body-tertiary my-border">
+{% load static %}
+<nav class="navbar my-border">
     <div class="container-fluid">
+    
         <a class="navbar-brand" href="{% url 'index' %}">Todo</a>
 
         {% if user.is_authenticated %}
             <div class="d-flex">
+            
                 <div class="me-2">
-                    <a class="btn btn-success" href="{% url 'create_todo' %}" role="button">New</a>
+                    <a class="btn btn-success" href="{% url 'create_todo' %}" role="button">
+                        <img src="{% static 'todo/img/plus-lg.svg' %}" alt=""> New </a>
                 </div>
 
                 <div class="me-2 btn-group">
+                    
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
                         {{ user.username }}
                     </button>
+                    
                     <ul class="dropdown-menu dropdown-menu-end">
+                         <li>
+                            <a class="dropdown-item" href="{% url 'current_todos' %}">Current todos</a>
+                        </li><li>
+                            <a class="dropdown-item" href="{% url 'completed_todos' %}">Completed todos</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{% url 'sign_out' %}" method="POST">
                                 {% csrf_token %}
@@ -20,13 +32,17 @@
                             </form>
                         </li>
                     </ul>
+                    
                 </div>
+            
             </div>
+            
         {% else %}
             <div class="d-flex">
                 <div class="me-2"><a class="btn btn-primary" href="{% url 'sign_in' %}" role="button">Sign In</a></div>
                 <div class="me-2"><a class="btn btn-primary" href="{% url 'sign_up' %}" role="button">Sign Up</a></div>
             </div>
         {% endif %}
+    
     </div>
 </nav>

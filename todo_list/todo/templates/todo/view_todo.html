@@ -1,10 +1,7 @@
-{{ todo.title }}
+{% extends "todo/base.html" %}
 
-<form method="POST" action="{% url 'complete_todo' todo.id %}">
-    {% csrf_token %}
-    <button type="submit">Complete</button>
-</form>
-<form method="POST" action="{% url 'delete_todo' todo.id %}">
-    {% csrf_token %}
-    <button type="submit">Delete</button>
-</form>
+{% block title %}{{ todo.title }}{% endblock %}
+
+{% block content %}
+   {% include 'todo/includes/big_card.html' %}
+{% endblock %}
