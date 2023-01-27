@@ -35,26 +35,35 @@ def view_todo(request, todo_id):
 
 
 @login_required(login_url='sign_in')
-def upsert_todo(request, todo_id=None):
-    todo = None
-    if todo_id:
-        todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+def create_todo(request):
     if request.method == 'GET':
-        form = TodoForm(instance=todo)
-        return render(request, 'todo/upsert_todo.html', {'form': form})
+        return render(request, 'todo/input_todo.html', {'form': TodoForm()})
     else:
+        form = TodoForm(request.POST)
         try:
-            form = TodoForm(request.POST, instance=todo)
-            if todo:
-                form.save()
-            else:
-                new_model = form.save(commit=False)
-                new_model.user = request.user
-                new_model.save()
+            new_todo = form.save(commit=False)
+            new_todo.author = request.user
+            new_todo.save()
             return redirect('current_todos')
         except ValueError:
-            return render(request, 'todo/upsert_todo.html', {'form': TodoForm(instance=todo),
-                                                             'error_message': 'Bad data entered'})
+            return render(request, 'todo/input_todo.html',
+                          {'form': TodoForm(), 'error_message': 'Bad data passed in. Try again.'})
+
+
+@login_required
+def edit_todo(request, todo_id):
+    todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
+    if request.method == 'GET':
+        form = TodoForm(instance=todo)
+        return render(request, 'todo/input_todo.html', {'todo': todo, 'form': form})
+    else:
+        form = TodoForm(request.POST, instance=todo)
+        try:
+            form.save()
+            return redirect('current_todos')
+        except ValueError:
+            return render(request, 'todo/input_todo.html',
+                          {'todo': todo, 'form': form, 'error_message': 'Bad data passed in. Try again.'})
 
 
 @login_required(login_url='sign_in')
