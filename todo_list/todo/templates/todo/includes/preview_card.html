@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="card mt-4 shadow">
+
+    <div class="card-header d-flex justify-content-between">
+
+        <a class="text-decoration-none link-dark pt-1 flex-grow-1" href="{% url 'view_todo' todo.id %}">
+            <b>{{ todo.title|truncatechars:50 }}</b>
+        </a>
+
+        {% if todo.completed is None %}
+        <form method="POST" action="{% url 'complete_todo' todo.id %}">
+            {% csrf_token %}
+            <button class="btn btn-success py-1 mx-1" type="submit">
+                <img src="{% static 'todo/img/check-lg.svg' %}" alt="" class="white"> Mark as done
+            </button>
+        </form>
+        {% endif %}
+
+        <a href="{% url 'edit_todo' todo.id %}" class="btn btn-warning py-1 mx-1" role="button">
+            <img src="{% static 'todo/img/pencil.svg' %}" alt=""> Edit
+        </a>
+    </div>
+
+    {% if todo.description %}
+        <a href="{% url 'view_todo' todo.id %}" class="text-decoration-none link-dark">
+            <div class="card-body">
+                <p class="card-text">{{ todo.description|truncatechars:100 }}</p>
+            </div>
+        </a>
+    {% endif %}
+
+</div>
