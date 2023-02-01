@@ -4,7 +4,7 @@
 
     <div class="card-header d-flex justify-content-between">
 
-        <a class="text-decoration-none link-dark pt-1 flex-grow-1" href="{% url 'view_todo' todo.id %}">
+        <a class="text-decoration-none link-dark pt-1 flex-grow-1" href="{{ todo.get_absolute_url }}">
             <b>{{ todo.title|truncatechars:50 }}</b>
         </a>
 
@@ -23,7 +23,7 @@
     </div>
 
     {% if todo.description %}
-        <a href="{% url 'view_todo' todo.id %}" class="text-decoration-none link-dark">
+        <a href="{{ todo.get_absolute_url }}" class="text-decoration-none link-dark">
             <div class="card-body">
                 <p class="card-text">{{ todo.description|truncatechars:100 }}</p>
             </div>
