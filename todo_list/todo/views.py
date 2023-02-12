@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
 from .models import Todo
-from .forms import TodoForm
+from .forms import TodoCreateForm
 
 
 def index(request):
@@ -37,9 +37,9 @@ def view_todo(request, todo_id):
 @login_required(login_url='sign_in')
 def create_todo(request):
     if request.method == 'GET':
-        return render(request, 'todo/input_todo.html', {'form': TodoForm()})
+        return render(request, 'todo/input_todo.html', {'form': TodoCreateForm()})
     else:
-        form = TodoForm(request.POST)
+        form = TodoCreateForm(request.POST)
         try:
             new_todo = form.save(commit=False)
             new_todo.author = request.user
@@ -47,17 +47,17 @@ def create_todo(request):
             return redirect('current_todos')
         except ValueError:
             return render(request, 'todo/input_todo.html',
-                          {'form': TodoForm(), 'error_message': 'Bad data passed in. Try again.'})
+                          {'form': TodoCreateForm(), 'error_message': 'Bad data passed in. Try again.'})
 
 
 @login_required
 def edit_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     if request.method == 'GET':
-        form = TodoForm(instance=todo)
+        form = TodoCreateForm(instance=todo)
         return render(request, 'todo/input_todo.html', {'todo': todo, 'form': form})
     else:
-        form = TodoForm(request.POST, instance=todo)
+        form = TodoCreateForm(request.POST, instance=todo)
         try:
             form.save()
             return redirect('current_todos')
