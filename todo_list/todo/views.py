@@ -94,7 +94,7 @@ def sign_up(request):
                 user = User.objects.create_user(username=username, password=password)
                 user.save()
                 login(request, user)
-                return redirect('index')
+                return redirect('current_todos')
             except IntegrityError:
                 return render(request, 'todo/sign_up.html', {'form': UserCreationForm,
                                                              'error_message': 'Login is already taken'})
@@ -115,7 +115,7 @@ def sign_in(request):
                                                          'error_message': 'Incorrect username and/or password'})
         else:
             login(request, user)
-            return redirect('index')
+            return redirect('current_todos')
 
 
 @login_required(login_url='sign_in')
