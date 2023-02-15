@@ -50,7 +50,7 @@ def create_todo(request):
                           {'form': TodoCreateForm(), 'error_message': 'Bad data passed in. Try again.'})
 
 
-@login_required
+@login_required(login_url='sign_in')
 def edit_todo(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id, author_id=request.user)
     if request.method == 'GET':
